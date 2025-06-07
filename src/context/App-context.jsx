@@ -38,7 +38,7 @@ export const AppContextProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:4000/api/users/login",
+        "https://imagify-backend-fw8d.onrender.com/api/users/login",
         {
           email,
           password,
@@ -78,11 +78,14 @@ export const AppContextProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const res = await axios.post("http://127.0.0.1:4000/api/users/register", {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "https://imagify-backend-fw8d.onrender.com/api/users/register",
+        {
+          name,
+          email,
+          password,
+        }
+      );
 
       localStorage.setItem("token", JSON.stringify(res.data.token));
       localStorage.setItem("credit", JSON.stringify(res.data.credits));
@@ -137,7 +140,7 @@ export const AppContextProvider = ({ children }) => {
   const generateImages = async (prompt) => {
     try {
       const response = await axios.post(
-        "http://127.0.0.1:4000/api/images/generate-image",
+        "https://imagify-backend-fw8d.onrender.com/api/images/generate-image",
         { prompt },
         { headers: { token } }
       );
@@ -184,14 +187,15 @@ export const AppContextProvider = ({ children }) => {
           console.log(response);
           
           const res = await axios.post(
-            "http://127.0.0.1:4000/api/users/verify-razor",
-              response
-            
+            "https://imagify-backend-fw8d.onrender.com/api/users/verify-razor",
+            response
           );
           if(res.status==200){
 
             const { data } = await axios.post(
-              "http://127.0.0.1:4000/api/users/credits",{},{headers:{token}}
+              "https://imagify-backend-fw8d.onrender.com/api/users/credits",
+              {},
+              { headers: { token } }
             );
 
             localStorage.setItem("credit",JSON.stringify(data.credits))
@@ -229,7 +233,7 @@ export const AppContextProvider = ({ children }) => {
         setShowLogin(true);
       }
       const response = await axios.post(
-        "http://127.0.0.1:4000/api/users/pay-razor",
+        "https://imagify-backend-fw8d.onrender.com/api/users/pay-razor",
         { planId },
         { headers: { token } }
       );
